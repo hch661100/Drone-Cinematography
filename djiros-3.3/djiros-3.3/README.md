@@ -1,6 +1,6 @@
 ## A modified [dji-sdk/Onboard-SDK-ROS](https://github.com/dji-sdk/Onboard-SDK-ROS) ##
 
-This is a modified version of [dji-sdk/Onboard-SDK-ROS](https://github.com/dji-sdk/Onboard-SDK-ROS), which uses standard ros message types, provides limited function of [dji-sdk/Onboard-SDK-ROS](https://github.com/dji-sdk/Onboard-SDK-ROS). In addition, we add the function which supports the communicaiton between Android device and onboard computer.
+This is a modified version of [dji-sdk/Onboard-SDK-ROS](https://github.com/dji-sdk/Onboard-SDK-ROS), which uses standard ros message types, provides limited function of [dji-sdk/Onboard-SDK-ROS](https://github.com/dji-sdk/Onboard-SDK-ROS). In addition, this package supports the communicaiton between Android device and onboard computer. The example about mobile communication can be found in https://github.com/hch661100/Drone-Cinematography/blob/master/djiros-3.3/djiros-3.3/src/demo/mobile_comm.cpp
 
 
 ### ROS Interfaces ###
@@ -27,9 +27,9 @@ Publishers:
  ~rc   : [sensor_msgs/Joy]                               RC joysticks at 50 Hz, remapped to [-1, +1]. See [include/djiros/DjiRos.h](include/djiros/DjiRos.h) for the direction.
  ~velo : [geometry_msgs/Vector3Stamped]                  Velocity message in NED frame.
  ~gps  : [sensor_msgs/NavSatFix]                         GPS message.
- ~gps_health : [std_msgs::UInt8]                   The strength of GPS Signal 0--->4 (bad --->good))
- ~from_mobile_data : [dji_sdk::MobileData]          Send the data to Android device
- ~gimbal_angle : [geometry_msgs::Vector3Stamped]    The angle of gimbal camera
+ ~gps_health : [std_msgs::UInt8]                         The strength of GPS Signal 0--->4 (bad --->good))
+ ~from_mobile_data : [dji_sdk::MobileData]               Publish the data sent from Android device
+ ~gimbal_angle : [geometry_msgs::Vector3Stamped]         The angle of gimbal camera
  
 ```
 
@@ -42,7 +42,9 @@ Subscribers:
 ~ctrl: [sensor_msgs/Joy] For controlling the drone
 ~
 ```
-<!-- * Subscriber "~gimbal_ctrl" and "~gimbal_speed_ctrl" for control the gimbal -->
-
+Services:
+```
+~send_data_to_mobile : [dji_sdk::SendMobileData]          Send Data to Android device
+```
 <!-- #### TODO #### -->
 

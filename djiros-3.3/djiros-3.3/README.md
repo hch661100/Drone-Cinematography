@@ -23,11 +23,14 @@ This is a modified version of [dji-sdk/Onboard-SDK-ROS](https://github.com/dji-s
 Publishers:
 
 ```
- ~imu  : [sensor_msgs/IMU]              IMU message at 400 Hz, in the [ROS REP 103](http://www.ros.org/reps/rep-0103.html) frame definition.
- ~rc   : [sensor_msgs/Joy]              RC joysticks at 50 Hz, remapped to [-1, +1]. See [include/djiros/DjiRos.h](include/djiros/DjiRos.h) for the direction.
- ~velo : [geometry_msgs/Vector3Stamped] Velocity message in NED frame.
- ~gps  : [sensor_msgs/NavSatFix]        GPS message.
- [SYNC] ~image: [sensor_msgs/Image]     Synchronized images from camera driver.
+ ~imu  : [sensor_msgs/IMU]                               IMU message at 400 Hz, in the [ROS REP 103](http://www.ros.org/reps/rep-0103.html) frame definition.
+ ~rc   : [sensor_msgs/Joy]                               RC joysticks at 50 Hz, remapped to [-1, +1]. See [include/djiros/DjiRos.h](include/djiros/DjiRos.h) for the direction.
+ ~velo : [geometry_msgs/Vector3Stamped]                  Velocity message in NED frame.
+ ~gps  : [sensor_msgs/NavSatFix]                         GPS message.
+ ~gps_health : [std_msgs::UInt8]                   The strength of GPS Signal 0--->4 (bad --->good))
+ ~from_mobile_data : [dji_sdk::MobileData]          Send the data to Android device
+ ~gimbal_angle : [geometry_msgs::Vector3Stamped]    The angle of gimbal camera
+ 
 ```
 
 * See the code and [official documents](https://developer.dji.com/onboard-sdk/documentation/) for published topics and their details.
@@ -37,6 +40,7 @@ Publishers:
 Subscribers:
 ```
 ~ctrl: [sensor_msgs/Joy] For controlling the drone
+~
 ```
 <!-- * Subscriber "~gimbal_ctrl" and "~gimbal_speed_ctrl" for control the gimbal -->
 

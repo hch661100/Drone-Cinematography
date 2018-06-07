@@ -1,0 +1,9 @@
+<launch>
+	<node pkg="read_x3" type="read_x3" name="read_x3" output="screen" >
+		<!-- node parameters -->
+		<param name="gray_or_rgb" type="int" value="1"/>
+		<param name="to_mobile" type="int" value="1"/>
+	</node>
+	<node pkg="read_x3" type="publish_img" name="publish_img" output="screen">
+	</node>
+</launch>

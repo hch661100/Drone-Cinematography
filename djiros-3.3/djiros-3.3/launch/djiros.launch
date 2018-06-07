@@ -1,0 +1,12 @@
+<launch>
+    <node pkg="djiros33" type="djiros_node" name="djiros33" output="screen" launch-prefix="">
+        <param name="log_level" type="string" value="info"/>
+        <param name="serial_name" type="string" value="/dev/ttyTHS1"/>
+        <param name="baud_rate" type="int" value="230400"/>
+        <param name="app_id" type="int" value="1051296"/>
+        <param name="enc_key" type="string" value="bee0410697a19ef2eaa1157805162991e7ffd08dc1b35c61d19882d5667fa43b"/>  
+        <param name="app_version" type="int" value="1"/>
+        <param name="sensor_mode" type="bool" value="false"/>
+        <param name="align_with_fmu" type="bool" value="true"/>
+	</node>
+</launch>

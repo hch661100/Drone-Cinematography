@@ -1,0 +1,9 @@
+<launch>
+
+	<node pkg="drone_cinematography" type="nbv_demo" name="nbv_demo" output="screen">
+		<remap from="~odom" to="/odom" />
+		<remap from="~waypoints" to="/waypoints" />
+	</node>
+
+
+</launch>

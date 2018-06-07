@@ -1,0 +1,50 @@
+<launch>
+	<node pkg="djiros" type="djiros_node" name="djiros" output="screen"
+		launch-prefix="" >
+		<env name="ROSCONSOLE_FORMAT" value="[${time}] ${message}"/>
+		<!-- node parameters -->
+		<param name="serial_name" type="string" value="/dev/ttyTHS1"/>
+		<param name="baud_rate" type="int" value="230400"/>
+		<param name="app_id" type="int" value="1047027"/>
+		<param name="app_version" type="int" value="1"/>
+		<param name="enc_key" type="string" value="bcdf733d9f0c74d4e93348918112da2a3252f4993e9c7c0904e27e510e54b677"/>	
+		<param name="only_broadcast" type="bool" value="false"/>
+		<param name="align_with_fmu" type="bool" value="true"/>
+	</node>
+
+
+	<node pkg="n1ctrl" type="n1_sim_helper.py" name="n1_sim_helper" output="screen">
+		<remap from="~odom" to="/odom" />
+		<remap from="~imu" to="/djiros/imu" />
+		<remap from="~velo" to="/djiros/velo" />
+		<remap from="~gps" to="/djiros/gps" />
+	</node>
+
+	<node pkg="n1ctrl" type="n1ctrl_node" name="n1ctrl" output="screen">
+		<env name="ROSCONSOLE_FORMAT" value="${message}"/>
+
+		<remap from="~joy" to="/djiros/rc" />
+		<remap from="~odom" to="/odom" />
+		<remap from="~imu" to="/djiros/imu" />
+		<remap from="~cmd" to="/position_cmd" />
+
+		<remap from="~desire_pose" to="/desire_pose" />
+		<remap from="~ctrl" to="/djiros/ctrl" />
+		<remap from="~traj_start_trigger" to="/traj_start_trigger" />
+
+		<rosparam command="load" file="$(find n1ctrl)/config/ctrl_param_uav1.yaml" />
+	</node>
+
+
+	<node pkg="trajectory_generator" type="trajectory_generator" name="trajectory_generator" output="screen">
+		<param name="add_waypoint_dist_thr" type="double" value="99.0" />
+		<param name="add_waypoint_theta_thr" type="double" value="99.0" /> 
+		<remap from="~odom" to="/odom" />
+		<remap from="~waypoints" to="/waypoints" />
+		<remap from="~position_cmd" to="/position_cmd" />
+		<remap from="~path" to="/raw_path_vis" />
+		<remap from="~traj" to="/traj_path_vis" />
+		<!-- <remap from="~trigger" to="/reset_hover_trigger" /> -->
+		<!-- <remap from="~correction" to="/waypoints_vis" /> -->
+	</node>
+</launch>

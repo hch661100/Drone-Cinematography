@@ -1,0 +1,62 @@
+<launch>
+	<arg name="height_topic" default="/sonar/height" />
+
+	<!-- Monocular Velocity Estimator -->    
+	<node pkg="monocular_velocity_estimator" name="monocular_velocity_estimator" type="monocular_velocity_estimator" output="screen">
+		<remap from="~image" to="/camera/image"/>
+		<remap from="~depth" to="$(arg height_topic)"/> 
+		<remap from="~imu" to="/djiros/imu"/> 
+		<param name="enable_visualization"       value="true"/>  
+		<param name="enable_image_visualization" value="false"/>  
+		<rosparam file="$(env ROS_HOME)/bags/25001482.yaml"/>                            
+	</node>     
+
+	<!-- Multi-Sensor UKF -->        
+	<node pkg="multi_sensor_ukf"
+		name="multi_sensor_ukf"
+		type="quadrotor_ukf"       
+		output="screen">
+		<!-- <remap from="~odom_gps"    to="TODO"/> -->    
+		<!-- <remap from="~odom_vision" to="TODO"/> -->
+		<remap from="~imu"         to="/djiros/imu"/>
+		<!-- <remap from="~odom_laser"  to="TODO"/>     -->
+		<remap from="~odom_flow"   to="/monocular_velocity_estimator/odom"/>
+		<!-- <remap from="~odom_vision"   to="TODO"/> -->
+		<remap from="~height_rel"  to="$(arg height_topic)"/>
+		<!--<remap from="~height_abs"  to="/sonar/height"/>-->
+		<param name="is_init_gps" value="false"/>                          
+		<param name="is_init_vo" value="false"/>                          
+		<param name="is_init_laser" value="false"/>                          
+		<param name="is_init_vision_pose" value="false"/>                          
+		<param name="is_init_vision_velo" value="true"/>                          
+	</node>  
+
+	<!-- Visualization & TF -->
+	<!-- <node pkg="odom_visualization"
+		name="odom_visualization_ukf_multi"
+		type="odom_visualization"       
+		output="screen">
+		<remap from="~odom" to="/multi_sensor_ukf/odom"/>
+		<param name="color/a" value="0.8"/>    
+		<param name="color/r" value="1.0"/>        
+		<param name="color/g" value="0.0"/>        
+		<param name="color/b" value="0.0"/>       
+		<param name="cross_config"        value="true"/>      
+		<param name="covariance_scale"    value="100.0"/>         
+		<param name="covariance_position" value="true"/>     
+		<param name="covariance_color"    value="false"/>
+	</node>          -->
+
+	<node name="tf_assist" pkg="uav_utils" type="tf_assist.py" output="screen">
+	<param name="~converter0/frame_id_in" value="/map" />
+	<param name="~converter0/frame_id_out" value="world" />
+	<param name="~converter0/broadcast_tf" value="true" />
+	<param name="~converter0/body_frame_id" value="body" />
+	<param name="~converter0/intermediate_frame_id" value="intermediate" />
+	<param name="~converter0/world_frame_id" value="world" />
+	<remap from="~converter0/in_odom" to="/multi_sensor_ukf/odom" />    
+	<remap from="~converter0/out_odom" to="/odom" />
+	<remap from="~converter0/out_path" to="/odom/path" />
+	</node>
+		
+</launch>

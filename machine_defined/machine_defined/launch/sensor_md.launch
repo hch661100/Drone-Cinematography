@@ -1,0 +1,11 @@
+<launch>
+	<include file="$(find uavlaunch)/launch/sensor.launch" >
+		<arg name="enable_camera" default="true" />
+	    <arg name="enable_color_camera" default="false" />
+	    <arg name="enable_laserscan" default="true" />
+	    <arg name="enable_djiros" default="true" />
+	    <arg name="enable_imu_3dm_gx4" default="false" />
+	    <arg name="enable_sonarros" default="false" />
+	    <arg name="enable_laserecho" default="false" />
+	</include>
+</launch>

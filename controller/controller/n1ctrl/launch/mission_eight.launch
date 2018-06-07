@@ -1,0 +1,13 @@
+<launch>
+
+	<node pkg="waypoint_generator" type="waypoint_generator" name="waypoint_generator" output="screen">
+		<param name="waypoint_type" type="string" value="eight" />
+		<remap from="~odom" to="/odom" />
+		<remap from="~goal" to="/goal" />
+		<remap from="~waypoints" to="/waypoints" />
+		<remap from="~waypoints_vis" to="/waypoints_vis" />
+		<remap from="~traj_start_trigger" to="/traj_start_trigger" />
+	</node>
+
+
+</launch>

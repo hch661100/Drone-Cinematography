@@ -1,0 +1,21 @@
+<launch>
+	
+<node pkg="guidance" type="guidanceNode" name="guidanceNode" output="screen"/>
+<node pkg="pos_vel_mocap" type="pos_vel_mocap" name="pos_vel_mocap" output="screen"/>
+<node pkg="n1ctrl" type="n1ctrl_node" name="n1ctrl" output="screen">
+		<!-- <env name="ROSCONSOLE_FORMAT" value="${message}"/> -->
+
+		<remap from="~joy" to="/djiros/rc" />
+		<remap from="~odom" to="/odom" />
+		<remap from="~imu" to="/djiros/imu" />
+		<remap from="~cmd" to="/position_cmd" />
+
+		<remap from="~desire_pose" to="/desire_pose" />
+		<remap from="~ctrl" to="/djiros/ctrl" />
+		<remap from="~traj_start_trigger" to="/traj_start_trigger" />
+		
+		<rosparam command="load" file="$(find n1ctrl)/config/ctrl_param_uav1.yaml" />
+
+	</node>
+
+</launch>

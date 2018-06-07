@@ -1,0 +1,43 @@
+# 2995 + 680(batt) = 3675
+mass        : 3.2
+gra         : 9.81
+hov_percent : 0.55
+
+CTRL_RATE             : 50.0
+ODOM_LOST_TIME_THR    : 0.5
+RC_LOST_TIME_THR      : 0.4
+CMD_LOST_TIME_THR     : 0.5
+RC_TO_HORI_VELO_SCALE : 4.0
+RC_TO_VERT_VELO_SCALE : 3.0
+
+# rad 30~0.523 45~0.785 60~1.047
+RC_TO_YAW_SCALE     : 1.047
+RC_TO_ANGLE_SCALE   : 0.523
+
+SET_HOV_PERCENT_TO_ZERO : false
+USE_HOV_PERCENT_KF: false
+RC_DEADZONE: 0.02
+LOCK_VELO: 0.3
+
+idling_desired_height_limit: 0.10
+idling_thrust: 0.1
+idling_landing_thrust: 0.8
+idling_landing_timeout: 1
+
+hov_thr_kf_update_vert_velo_limit: 100.1
+hov_thr_kf_update_vert_height_limit: 0.2
+
+# Controller gain in minimun snap
+#           opti/flow1  flow2  multi
+Kp0: 10.0 # 14.0
+Kp1: 10.0 # 14.0
+Kp2: 30.0 # 40.0
+Kv0: 8.0 #   8.0
+Kv1: 8.0 #   8.0
+Kv2: 14.0 # 14.0
+Kr0: 0.5
+Kr1: 0.5
+Kr2: 0.1
+Kw0: 0.07
+Kw1: 0.07
+Kw2: 0.03

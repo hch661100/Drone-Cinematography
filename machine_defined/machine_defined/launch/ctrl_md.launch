@@ -1,0 +1,27 @@
+<launch>
+	<arg name="jchen" default="true" />
+	
+	<include if="$(arg jchen)" file="$(find uavlaunch)/launch/ctrl.launch" >
+		<arg name="uavname" default="uav1" />
+		<arg name="enable_djisim" default="true" />
+		<arg name="use_jchen" default="true" />
+
+		<arg name="waypoint_type" value="point"/>
+		<arg name="max_velocity" value="1.0" />
+		<arg name="max_acceleration" value="1.0" />
+		<arg name="flight_velocity" value="1.0" />
+		<arg name="flight_acceleration" value="1.0" />
+	</include>
+
+	<include unless="$(arg jchen)" file="$(find uavlaunch)/launch/ctrl.launch" >
+		<arg name="uavname" default="$(env UAVNAME)" />
+		<arg name="enable_djisim" default="false" />
+		<arg name="use_jchen" default="false" />
+
+		<arg name="waypoint_type" value="eight"/>
+		<arg name="traj_vel" value="1.0"/>
+		<arg name="traj_acc" value="1.0"/>
+	</include>
+
+
+</launch>

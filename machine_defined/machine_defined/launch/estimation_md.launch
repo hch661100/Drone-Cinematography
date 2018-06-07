@@ -1,0 +1,6 @@
+<launch>
+    <!-- <include file="$(find ekf)/launch/ekf.launch" />
+    <include file="$(find self_calibration_estimator)/launch/online.launch" /> -->
+    <include file="$(find laser_mono_launch)/m100_laser.launch" />
+		
+</launch>

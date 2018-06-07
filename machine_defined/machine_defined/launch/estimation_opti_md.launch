@@ -1,0 +1,50 @@
+<launch>
+	<node pkg="mocap_optitrack"
+		type="mocap_node"
+		name="mocap_node"
+		respawn="false"
+		launch-prefix=""
+		output="screen"
+		required="true">
+		<rosparam file="$(find mocap_optitrack)/config/mocap.yaml" command="load" />
+	</node>
+
+	<node pkg="mocap_optitrack" type="mocap_optitrack_object_transform_node" name="mocap_object_transformer" output="screen">
+		<remap from="~in_pose" to="/Robot_1/pose" />
+		<remap from="~odom" to="/mocap/odom" />
+	</node>
+
+    <node pkg="poseekf" type="poseekf" name="poseekf" output="screen">
+        <remap from="~imu" to="/djiros/imu"/>
+        <remap from="~odom_slam" to="/mocap/odom"/>
+        <rosparam file="$(find poseekf)/config/params.yaml"/>
+    </node>
+
+   	<!-- <node name="tf_assist" pkg="uav_utils" type="tf_assist.py" output="screen">
+	    <param name="~converter0/frame_id_in" value="/map" />
+	    <param name="~converter0/frame_id_out" value="world" />
+	    <param name="~converter0/broadcast_tf" value="true" />
+	    <param name="~converter0/body_frame_id" value="body" />
+	    <param name="~converter0/intermediate_frame_id" value="intermediate" />
+	    <param name="~converter0/world_frame_id" value="world" />
+	    <remap from="~converter0/in_odom" to="/poseekf/odom" />    
+	    <remap from="~converter0/out_odom" to="/odom" />
+	    <remap from="~converter0/out_path" to="/ekfpath" />
+  	</node> -->
+
+  	<!-- <node pkg="odom_visualization"
+        name="odom_visualization_poseekf"
+        type="odom_visualization"       
+        output="screen">
+	    <remap from="~odom" to="/poseekf/odom"/>
+	    <param name="color/a" value="0.8"/>    
+	    <param name="color/r" value="1.0"/>        
+	    <param name="color/g" value="0.0"/>        
+	    <param name="color/b" value="0.0"/>       
+	    <param name="cross_config"        value="true"/>      
+	    <param name="covariance_scale"    value="100.0"/>         
+	    <param name="covariance_position" value="true"/>     
+	    <param name="tf45"    value="false"/>            
+  	</node>     -->
+		
+</launch>
